@@ -3,9 +3,12 @@ namespace Library.Tests
     public class UnitTest1
     {
         [Fact]
-        public void Test1()
+        public void ThisTestshouldPass()
         {
-
+            string name = "Manar";
+            Assert.Equal("Manar", name);
         }
+
+
     }
 }
