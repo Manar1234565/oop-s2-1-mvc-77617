@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Library.MVC.Models.Loan>
+@{
+    ViewData["Title"] = "Loans";
+}
+
+<h2>Loans</h2>
+<a asp-action="Create" class="btn btn-success mb-3">+ New Loan</a>
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Loan Date</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var loan in Model)
+        {
+            var isOverdue = loan.ReturnedDate == null && loan.DueDate < DateTime.Today;
+            <tr class="@(isOverdue ? "table-danger" : "")">
+                <td>@loan.Book?.Title</td>
+                <td>@loan.Member?.FullName</td>
+                <td>@loan.LoanDate.ToString("dd/MM/yyyy")</td>
+                <td>@loan.DueDate.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @if (loan.ReturnedDate != null)
+                    {
+                        <span class="badge bg-success">Returned @loan.ReturnedDate.Value.ToString("dd/MM/yyyy")</span>
+                    }
+                    else if (isOverdue)
+                    {
+                        <span class="badge bg-danger">Overdue</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-primary">Active</span>
+                    }
+                </td>
+                <td>
+                    @if (loan.ReturnedDate == null)
+                    {
+                        <form asp-action="Return" asp-route-id="@loan.Id" method="post" style="display:inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-outline-success">Mark Returned</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

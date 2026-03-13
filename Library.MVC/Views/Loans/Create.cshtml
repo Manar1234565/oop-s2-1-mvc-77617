@@ -1,0 +1,36 @@
+﻿@model Library.MVC.Models.Loan
+@{
+    ViewData["Title"] = "New Loan";
+}
+
+<h2>New Loan</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label class="form-label">Member</label>
+        <select name="MemberId" class="form-select" required>
+            <option value="">-- Select Member --</option>
+            @foreach (SelectListItem item in ViewBag.Members)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Available Book</label>
+        <select name="BookId" class="form-select" required>
+            <option value="">-- Select Book --</option>
+            @foreach (SelectListItem item in ViewBag.Books)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Loan</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
