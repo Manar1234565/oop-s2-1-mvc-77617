@@ -12,7 +12,7 @@ permissions:
   pages: write
   id-token: write
 env:
-  DOTNET_VERSION: "8.0.x"
+  DOTNET_VERSION: "9.0.x"
   TEST_PROJECT: "Library.Tests/Library.Tests.csproj"
 jobs:
   build-and-test:
